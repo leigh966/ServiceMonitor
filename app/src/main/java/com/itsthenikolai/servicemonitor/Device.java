@@ -6,7 +6,7 @@ import androidx.room.PrimaryKey;
 
 @Entity
 public class Device {
-    @PrimaryKey
+    @PrimaryKey(autoGenerate = true)
     public int uid;
 
     @ColumnInfo(name="name")
@@ -20,5 +20,10 @@ public class Device {
     {
         this.name = name;
         this.ip = ip;
+    }
+
+    public Device()
+    {
+
     }
 }
