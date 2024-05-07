@@ -20,6 +20,8 @@ import androidx.sqlite.db.SupportSQLiteDatabase;
 
 import com.itsthenikolai.servicemonitor.databinding.ActivityMainBinding;
 
+import java.util.List;
+
 public class MainActivity extends AppCompatActivity {
 
     private AppBarConfiguration mAppBarConfiguration;
@@ -27,9 +29,14 @@ public class MainActivity extends AppCompatActivity {
 
     public AppDatabase db;
 
+    Menu sidebar;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+
+
 
         db = Room.databaseBuilder(getApplicationContext(),
                 AppDatabase.class, "service-db")
@@ -39,7 +46,7 @@ public class MainActivity extends AppCompatActivity {
 
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
-
+        sidebar = binding.navView.getMenu();
         setSupportActionBar(binding.appBarMain.toolbar);
         binding.appBarMain.fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -60,10 +67,22 @@ public class MainActivity extends AppCompatActivity {
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
         NavigationUI.setupWithNavController(navigationView, navController);
 
-
+        UpdateNavBar();
 
     }
 
+    public void UpdateNavBar()
+    {
+        // Clear menu
+        // Get the devices
+        List<Device> devices = db.deviceDao().getAll();
+        // Add the devices
+        for (Device d : devices
+             ) {
+            sidebar.add(d.name);
+        }
+
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
