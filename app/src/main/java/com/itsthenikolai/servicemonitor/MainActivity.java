@@ -7,7 +7,6 @@ import android.view.Menu;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.navigation.NavigationView;
 
-import androidx.annotation.NonNull;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
@@ -15,8 +14,6 @@ import androidx.navigation.ui.NavigationUI;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.room.Room;
-import androidx.room.migration.Migration;
-import androidx.sqlite.db.SupportSQLiteDatabase;
 
 import com.itsthenikolai.servicemonitor.databinding.ActivityMainBinding;
 
@@ -67,19 +64,24 @@ public class MainActivity extends AppCompatActivity {
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
         NavigationUI.setupWithNavController(navigationView, navController);
 
-        UpdateNavBar();
+        updateNavBar();
 
     }
 
-    public void UpdateNavBar()
+    public void addNavOption(Device d)
     {
-        // Clear menu
+        sidebar.add(d.name);
+    }
+
+
+    public void updateNavBar()
+    {
         // Get the devices
         List<Device> devices = db.deviceDao().getAll();
         // Add the devices
         for (Device d : devices
              ) {
-            sidebar.add(d.name);
+            addNavOption(d);
         }
 
     }

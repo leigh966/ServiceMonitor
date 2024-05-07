@@ -1,7 +1,6 @@
 package com.itsthenikolai.servicemonitor.ui.add_device;
 
 import android.os.Bundle;
-import android.os.Debug;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,9 +15,7 @@ import androidx.lifecycle.ViewModelProvider;
 import com.itsthenikolai.servicemonitor.Device;
 import com.itsthenikolai.servicemonitor.DeviceDao;
 import com.itsthenikolai.servicemonitor.MainActivity;
-import com.itsthenikolai.servicemonitor.R;
 import com.itsthenikolai.servicemonitor.databinding.FragmentAddDeviceBinding;
-import android.app.Activity;
 
 import java.util.List;
 
@@ -30,10 +27,17 @@ public class AddDeviceFragment extends Fragment{
 
     private void onSubmit()
     {
+        Device newDevice = new Device(binding.nameInput.getText().toString(), binding.ipInput.getText().toString());
         // Add new device to database
-        deviceDao.insertAll(new Device(binding.nameInput.getText().toString(), binding.ipInput.getText().toString()));
-        // Update nav bar?
+        deviceDao.insertAll(newDevice);
+
+        // Update nav bar
+        MainActivity act = (MainActivity) getActivity();
+        act.addNavOption(newDevice);
+
         // Navigate to the fragment of the new device
+
+        // Log current
         List<Device> devices = deviceDao.getAll();
         for (Device d:
              devices) {
