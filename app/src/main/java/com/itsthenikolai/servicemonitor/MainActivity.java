@@ -29,7 +29,7 @@ public class MainActivity extends AppCompatActivity {
     public AppDatabase db;
 
     Menu sidebar;
-    NavController navController;
+    public NavController navController;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,16 +71,20 @@ public class MainActivity extends AppCompatActivity {
         initNavBar();
     }
 
+    public void navigateToDevice(String name){
+        Bundle bundle = new Bundle();
+        bundle.putString("device_name", name);
+        navController.navigate(R.id.nav_device, bundle);
+    }
+
     public void addNavOption(Device d)
     {
         sidebar.add(d.name);
         sidebar.getItem(sidebar.size()-1).setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(@NonNull MenuItem item) {
-                Bundle bundle = new Bundle();
-                bundle.putString("device_name", item.getTitle().toString());
-                navController.navigate(R.id.nav_device, bundle);
 
+                navigateToDevice(item.getTitle().toString());
                 return true;
             }
         });
