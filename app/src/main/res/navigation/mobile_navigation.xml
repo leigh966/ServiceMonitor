@@ -12,10 +12,19 @@
         tools:layout="@layout/fragment_add_device" />
 
     <fragment
-        android:id="@+id/nav_gallery"
-        android:name="com.itsthenikolai.servicemonitor.ui.gallery.GalleryFragment"
+        android:id="@+id/nav_device"
+        android:name="com.itsthenikolai.servicemonitor.ui.device.DeviceFragment"
         android:label="@string/menu_gallery"
-        tools:layout="@layout/fragment_gallery" />
+        tools:layout="@layout/fragment_device" >
+        <argument
+            android:name="device_name"
+            app:argType="string"
+            android:defaultValue="UNKNOWN" />
+        <argument
+            android:name="device_ip"
+            app:argType="string"
+            android:defaultValue="UNKNOWN" />
+    </fragment>
 
     <fragment
         android:id="@+id/nav_slideshow"

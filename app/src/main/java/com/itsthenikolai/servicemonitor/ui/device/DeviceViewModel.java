@@ -1,16 +1,16 @@
-package com.itsthenikolai.servicemonitor.ui.gallery;
+package com.itsthenikolai.servicemonitor.ui.device;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-public class GalleryViewModel extends ViewModel {
+public class DeviceViewModel extends ViewModel {
 
     private final MutableLiveData<String> mText;
 
-    public GalleryViewModel() {
+    public DeviceViewModel() {
         mText = new MutableLiveData<>();
-        mText.setValue("This is gallery fragment");
+        //mText.setValue("This is gallery fragment");
     }
 
     public LiveData<String> getText() {

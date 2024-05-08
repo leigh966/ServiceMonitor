@@ -1,12 +1,14 @@
 package com.itsthenikolai.servicemonitor;
 
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.Menu;
 
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.navigation.NavigationView;
 
+import androidx.annotation.NonNull;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
@@ -27,6 +29,7 @@ public class MainActivity extends AppCompatActivity {
     public AppDatabase db;
 
     Menu sidebar;
+    NavController navController;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,24 +60,38 @@ public class MainActivity extends AppCompatActivity {
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
         mAppBarConfiguration = new AppBarConfiguration.Builder(
-                R.id.nav_add_device, R.id.nav_gallery, R.id.nav_slideshow)
+                R.id.nav_add_device, R.id.nav_device, R.id.nav_slideshow)
                 .setOpenableLayout(drawer)
                 .build();
-        NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_main);
+        navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_main);
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
         NavigationUI.setupWithNavController(navigationView, navController);
 
-        updateNavBar();
 
+        initNavBar();
     }
 
     public void addNavOption(Device d)
     {
         sidebar.add(d.name);
+        sidebar.getItem(sidebar.size()-1).setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(@NonNull MenuItem item) {
+                Bundle bundle = new Bundle();
+                bundle.putString("device_name", item.getTitle().toString());
+                navController.navigate(R.id.nav_device, bundle);
+
+                return true;
+            }
+        });
     }
 
+    public void onAddDeviceClicked()
+    {
+        navController.navigate(R.id.nav_add_device);
+    }
 
-    public void updateNavBar()
+    public void initNavBar()
     {
         // Get the devices
         List<Device> devices = db.deviceDao().getAll();
@@ -83,6 +100,14 @@ public class MainActivity extends AppCompatActivity {
              ) {
             addNavOption(d);
         }
+
+        sidebar.getItem(0).setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(@NonNull MenuItem item) {
+                onAddDeviceClicked();
+                return true;
+            }
+        });
 
     }
 

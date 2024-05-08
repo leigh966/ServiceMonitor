@@ -1,4 +1,4 @@
-package com.itsthenikolai.servicemonitor.ui.gallery;
+package com.itsthenikolai.servicemonitor.ui.device;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -10,22 +10,23 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
-import com.itsthenikolai.servicemonitor.databinding.FragmentGalleryBinding;
+import com.itsthenikolai.servicemonitor.databinding.FragmentDeviceBinding;
 
-public class GalleryFragment extends Fragment {
+public class DeviceFragment extends Fragment {
 
-    private FragmentGalleryBinding binding;
+    private FragmentDeviceBinding binding;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        GalleryViewModel galleryViewModel =
-                new ViewModelProvider(this).get(GalleryViewModel.class);
+        DeviceViewModel deviceViewModel =
+                new ViewModelProvider(this).get(DeviceViewModel.class);
 
-        binding = FragmentGalleryBinding.inflate(inflater, container, false);
+        binding = FragmentDeviceBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
         final TextView textView = binding.textGallery;
-        galleryViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
+        textView.setText(getArguments().getString("device_name"));
+        deviceViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
         return root;
     }
 
