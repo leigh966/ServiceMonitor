@@ -8,27 +8,36 @@
     <fragment
         android:id="@+id/nav_add_device"
         android:name="com.itsthenikolai.servicemonitor.ui.add_device.AddDeviceFragment"
-        android:label="@string/menu_home"
+        android:label="@string/menu_add_device"
         tools:layout="@layout/fragment_add_device" />
 
     <fragment
         android:id="@+id/nav_device"
         android:name="com.itsthenikolai.servicemonitor.ui.device.DeviceFragment"
-        android:label="@string/menu_gallery"
-        tools:layout="@layout/fragment_device" >
+        android:label="@string/menu_device"
+        tools:layout="@layout/fragment_device">
         <argument
             android:name="device_name"
-            app:argType="string"
-            android:defaultValue="UNKNOWN" />
+            android:defaultValue="UNKNOWN"
+            app:argType="string" />
         <argument
             android:name="device_ip"
-            app:argType="string"
-            android:defaultValue="UNKNOWN" />
+            android:defaultValue="UNKNOWN"
+            app:argType="string" />
+        <argument
+            android:name="device_id"
+            android:defaultValue="-1"
+            app:argType="integer" />
+    </fragment>
+    <fragment
+        android:id="@+id/nav_add_service"
+        android:name="com.itsthenikolai.servicemonitor.ui.slideshow.SlideshowFragment"
+        android:label="@string/menu_add_service"
+        tools:layout="@layout/fragment_slideshow" >
+        <argument
+            android:name="device_id"
+            android:defaultValue="-1"
+            app:argType="integer" />
     </fragment>
 
-    <fragment
-        android:id="@+id/nav_slideshow"
-        android:name="com.itsthenikolai.servicemonitor.ui.slideshow.SlideshowFragment"
-        android:label="@string/menu_slideshow"
-        tools:layout="@layout/fragment_slideshow" />
 </navigation>
