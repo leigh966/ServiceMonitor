@@ -60,13 +60,15 @@ public class MainActivity extends AppCompatActivity {
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
         mAppBarConfiguration = new AppBarConfiguration.Builder(
-                R.id.nav_add_device, R.id.nav_device, R.id.nav_slideshow)
+                R.id.nav_add_device, R.id.nav_device)
                 .setOpenableLayout(drawer)
                 .build();
         navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_main);
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
         NavigationUI.setupWithNavController(navigationView, navController);
 
+
+        setShowButton(false);
 
         initNavBar();
     }
@@ -128,4 +130,15 @@ public class MainActivity extends AppCompatActivity {
         return NavigationUI.navigateUp(navController, mAppBarConfiguration)
                 || super.onSupportNavigateUp();
     }
+
+    public void setShowButton(Boolean shown)
+    {
+        if(shown)
+        {
+            binding.appBarMain.fab.show();
+            return;
+        }
+        binding.appBarMain.fab.hide();
+    }
+
 }
