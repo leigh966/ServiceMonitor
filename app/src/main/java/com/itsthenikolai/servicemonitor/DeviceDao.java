@@ -3,6 +3,7 @@ package com.itsthenikolai.servicemonitor;
 import androidx.room.Dao;
 import androidx.room.Insert;
 import androidx.room.Query;
+import androidx.room.Transaction;
 
 import java.util.List;
 
@@ -13,4 +14,8 @@ public interface DeviceDao {
 
     @Insert
     void insertAll(Device... devices);
+
+    @Transaction
+    @Query("SELECT * FROM Device")
+    public List<DeviceWithServices> getDeviceWithServices();
 }
