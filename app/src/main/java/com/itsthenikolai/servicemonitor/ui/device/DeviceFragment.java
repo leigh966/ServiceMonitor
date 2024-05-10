@@ -1,5 +1,7 @@
 package com.itsthenikolai.servicemonitor.ui.device;
 
+import static android.view.View.*;
+
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,6 +14,7 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.itsthenikolai.servicemonitor.MainActivity;
+import com.itsthenikolai.servicemonitor.R;
 import com.itsthenikolai.servicemonitor.databinding.FragmentDeviceBinding;
 
 public class DeviceFragment extends Fragment {
@@ -30,6 +33,16 @@ public class DeviceFragment extends Fragment {
         textView.setText(getArguments().getString("device_name"));
         deviceViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
 
+        MainActivity act = (MainActivity) getActivity();
+        act.setButtonOnClick(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Bundle b = new Bundle();
+                b.putInt("device_id", getArguments().getInt("device_id"));
+                act.navController.navigate(R.id.nav_add_service, b);
+            }
+        });
+
         return root;
     }
 
@@ -39,6 +52,7 @@ public class DeviceFragment extends Fragment {
         // show button
         MainActivity act = (MainActivity) getActivity();
         act.setShowButton(true);
+
 
     }
 

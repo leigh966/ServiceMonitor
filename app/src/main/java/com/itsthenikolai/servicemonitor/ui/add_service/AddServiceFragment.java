@@ -1,6 +1,7 @@
 package com.itsthenikolai.servicemonitor.ui.add_service;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,6 +11,10 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
+import com.itsthenikolai.servicemonitor.DeviceDao;
+import com.itsthenikolai.servicemonitor.MainActivity;
+import com.itsthenikolai.servicemonitor.Service;
+import com.itsthenikolai.servicemonitor.ServiceDao;
 import com.itsthenikolai.servicemonitor.databinding.FragmentAddServiceBinding;
 
 public class AddServiceFragment extends Fragment {
@@ -26,8 +31,26 @@ public class AddServiceFragment extends Fragment {
 
         //final TextView textView = binding.txt;
         //addServiceViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
+
+        binding.btnSave.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onSubmit();
+            }
+        });
+
         return root;
     }
+
+    public void onSubmit()
+    {
+        Service newService = new Service("test", "/test", 9669, getArguments().getInt("device_id"));
+        MainActivity act = (MainActivity) getActivity();
+        ServiceDao dao = act.db.serviceDao();
+        dao.insertAll(newService);
+        Log.w("test", act.db.deviceDao().getDeviceWithServices().toString());
+    }
+
 
     @Override
     public void onDestroyView() {

@@ -48,13 +48,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(binding.getRoot());
         sidebar = binding.navView.getMenu();
         setSupportActionBar(binding.appBarMain.toolbar);
-        binding.appBarMain.fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                // change this to navigate to the add_sevice fragment
-                navController.navigate(R.id.nav_add_service);
-            }
-        });
+
         DrawerLayout drawer = binding.drawerLayout;
         NavigationView navigationView = binding.navView;
         // Passing each menu ID as a set of Ids because each
@@ -139,6 +133,11 @@ public class MainActivity extends AppCompatActivity {
             return;
         }
         binding.appBarMain.fab.hide();
+    }
+
+    public void setButtonOnClick(View.OnClickListener listener)
+    {
+        binding.appBarMain.fab.setOnClickListener(listener);
     }
 
 }

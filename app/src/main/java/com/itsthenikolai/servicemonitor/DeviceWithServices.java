@@ -1,5 +1,6 @@
 package com.itsthenikolai.servicemonitor;
 
+import androidx.annotation.NonNull;
 import androidx.room.Embedded;
 import androidx.room.Relation;
 
@@ -12,4 +13,13 @@ public class DeviceWithServices {
             entityColumn = "deviceId"
     )
     public List<Service> services;
+
+
+    @Override
+    @NonNull
+    public String toString()
+    {
+        return String.format("device_name: %s\nservice_names: %s", device.name, services.toString());
+    }
+
 }
