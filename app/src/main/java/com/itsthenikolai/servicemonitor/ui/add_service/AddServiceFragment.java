@@ -1,4 +1,4 @@
-package com.itsthenikolai.servicemonitor.ui.slideshow;
+package com.itsthenikolai.servicemonitor.ui.add_service;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -10,22 +10,22 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
-import com.itsthenikolai.servicemonitor.databinding.FragmentSlideshowBinding;
+import com.itsthenikolai.servicemonitor.databinding.FragmentAddServiceBinding;
 
-public class SlideshowFragment extends Fragment {
+public class AddServiceFragment extends Fragment {
 
-    private FragmentSlideshowBinding binding;
+    private FragmentAddServiceBinding binding;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        SlideshowViewModel slideshowViewModel =
-                new ViewModelProvider(this).get(SlideshowViewModel.class);
+        AddServiceViewModel addServiceViewModel =
+                new ViewModelProvider(this).get(AddServiceViewModel.class);
 
-        binding = FragmentSlideshowBinding.inflate(inflater, container, false);
+        binding = FragmentAddServiceBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
         final TextView textView = binding.textSlideshow;
-        slideshowViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
+        addServiceViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
         return root;
     }
 

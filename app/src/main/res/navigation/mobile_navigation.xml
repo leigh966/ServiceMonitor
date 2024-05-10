@@ -31,9 +31,9 @@
     </fragment>
     <fragment
         android:id="@+id/nav_add_service"
-        android:name="com.itsthenikolai.servicemonitor.ui.slideshow.SlideshowFragment"
+        android:name="com.itsthenikolai.servicemonitor.ui.add_service.AddServiceFragment"
         android:label="@string/menu_add_service"
-        tools:layout="@layout/fragment_slideshow" >
+        tools:layout="@layout/fragment_add_service" >
         <argument
             android:name="device_id"
             android:defaultValue="-1"
