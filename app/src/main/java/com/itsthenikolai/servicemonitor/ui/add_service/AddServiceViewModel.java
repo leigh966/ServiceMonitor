@@ -6,14 +6,17 @@ import androidx.lifecycle.ViewModel;
 
 public class AddServiceViewModel extends ViewModel {
 
-    private final MutableLiveData<String> mText;
+    //private final MutableLiveData<String> mText;
 
     public AddServiceViewModel() {
-        mText = new MutableLiveData<>();
-        mText.setValue("This is slideshow fragment");
+        //mText = new MutableLiveData<>();
+        //mText.setValue("This is slideshow fragment");
     }
 
+    /*
     public LiveData<String> getText() {
         return mText;
     }
+    */
+
 }
