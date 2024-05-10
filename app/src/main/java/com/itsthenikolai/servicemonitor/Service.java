@@ -1,5 +1,7 @@
 package com.itsthenikolai.servicemonitor;
 
+import androidx.annotation.NonNull;
+import androidx.media3.common.Format;
 import androidx.room.ColumnInfo;
 import androidx.room.Embedded;
 import androidx.room.Entity;
@@ -31,5 +33,12 @@ public class Service {
 
     @ColumnInfo(name="deviceId")
     public int deviceId;
+
+    @Override
+    @NonNull
+    public String toString()
+    {
+        return String.format("name: %s, endpoint: %s, port: %d, deviceId: %d", name, endpoint, port, deviceId);
+    }
 
 }

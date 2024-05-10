@@ -36,7 +36,7 @@ public class AddDeviceFragment extends Fragment{
         act.addNavOption(newDevice);
 
         // Navigate to the fragment of the new device
-        act.navigateToDevice(newDevice.name);
+        act.navigateToDevice(newDevice.name, newDevice.uid);
 
         // Log current
         List<Device> devices = deviceDao.getAll();

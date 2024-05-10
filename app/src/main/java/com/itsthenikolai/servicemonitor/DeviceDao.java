@@ -15,6 +15,7 @@ public interface DeviceDao {
     @Insert
     void insertAll(Device... devices);
 
+
     @Transaction
     @Query("SELECT * FROM Device")
     public List<DeviceWithServices> getDeviceWithServices();

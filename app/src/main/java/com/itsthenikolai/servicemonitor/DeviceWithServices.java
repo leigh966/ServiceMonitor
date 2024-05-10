@@ -19,7 +19,7 @@ public class DeviceWithServices {
     @NonNull
     public String toString()
     {
-        return String.format("device_name: %s\nservice_names: %s", device.name, services.toString());
+        return String.format("device_name: %s\nservices: %s", device.name, services.toString());
     }
 
 }

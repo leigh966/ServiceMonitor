@@ -49,6 +49,7 @@ public class AddServiceFragment extends Fragment {
         ServiceDao dao = act.db.serviceDao();
         dao.insertAll(newService);
         Log.w("test", act.db.deviceDao().getDeviceWithServices().toString());
+        Log.w("test", act.db.serviceDao().getAll().toString());
     }
 
 

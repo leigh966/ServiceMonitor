@@ -67,9 +67,10 @@ public class MainActivity extends AppCompatActivity {
         initNavBar();
     }
 
-    public void navigateToDevice(String name){
+    public void navigateToDevice(String name, int id){
         Bundle bundle = new Bundle();
         bundle.putString("device_name", name);
+        bundle.putInt("device_id", id);
         navController.navigate(R.id.nav_device, bundle);
     }
 
@@ -80,7 +81,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public boolean onMenuItemClick(@NonNull MenuItem item) {
 
-                navigateToDevice(item.getTitle().toString());
+                navigateToDevice(d.name, d.uid);
                 return true;
             }
         });
