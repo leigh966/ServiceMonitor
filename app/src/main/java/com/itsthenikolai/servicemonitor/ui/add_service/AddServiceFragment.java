@@ -44,7 +44,14 @@ public class AddServiceFragment extends Fragment {
 
     public void onSubmit()
     {
-        Service newService = new Service("test", "/test", 9669, getArguments().getInt("device_id"));
+        String name = binding.txtName.getText().toString();
+        String endpoint = binding.txtEndpoint.getText().toString();
+        int port = Integer.parseInt(binding.txtPort.getText().toString());
+        Service newService = new Service(
+                name,
+                endpoint,
+                port,
+                getArguments().getInt("device_id"));
         MainActivity act = (MainActivity) getActivity();
         ServiceDao dao = act.db.serviceDao();
         dao.insertAll(newService);
