@@ -29,7 +29,7 @@ public class DeviceFragment extends Fragment {
         binding = FragmentDeviceBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
-        final TextView textView = binding.textGallery;
+        final TextView textView = binding.textDeviceName;
         textView.setText(getArguments().getString("device_name"));
         deviceViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
 
