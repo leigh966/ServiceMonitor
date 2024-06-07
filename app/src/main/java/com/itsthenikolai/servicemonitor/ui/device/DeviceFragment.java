@@ -58,12 +58,16 @@ public class DeviceFragment extends Fragment {
 
     private void createServiceTabs()
     {
+        FragmentManager fragMan = getFragmentManager();
+        FragmentTransaction fragTransaction = fragMan.beginTransaction();
 
         for(Service s : relatedServices)
         {
             // add service tab
-            binding.serviceTabsLayout.addView(new ServiceTab(getContext()));
+            fragTransaction.add(binding.serviceTabsLayout.getId(), (Fragment) new ServiceTab(), "frag"+s.name.toString());
+
         }
+        fragTransaction.commit();
     }
 
     @Override
