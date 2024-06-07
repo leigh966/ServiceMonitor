@@ -19,4 +19,7 @@ public interface DeviceDao {
     @Transaction
     @Query("SELECT * FROM Device")
     public List<DeviceWithServices> getDeviceWithServices();
+
+    @Query("SELECT * FROM Device WHERE uid=:uid")
+    public Device get(int uid);
 }

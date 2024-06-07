@@ -16,6 +16,8 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.ViewModelProvider;
 
+import com.itsthenikolai.servicemonitor.Device;
+import com.itsthenikolai.servicemonitor.DeviceDao;
 import com.itsthenikolai.servicemonitor.MainActivity;
 import com.itsthenikolai.servicemonitor.R;
 import com.itsthenikolai.servicemonitor.Service;
@@ -60,11 +62,13 @@ public class DeviceFragment extends Fragment {
     {
         FragmentManager fragMan = getFragmentManager();
         FragmentTransaction fragTransaction = fragMan.beginTransaction();
-
+        MainActivity act = (MainActivity) getActivity();
+        DeviceDao deviceDao = act.db.deviceDao();
+        Device thisDevice = deviceDao.get(getArguments().getInt("device_id"));
         for(Service s : relatedServices)
         {
             // add service tab
-            fragTransaction.add(binding.serviceTabsLayout.getId(), (Fragment) new ServiceTab(s), "frag"+s.name.toString());
+            fragTransaction.add(binding.serviceTabsLayout.getId(), (Fragment) new ServiceTab(thisDevice,s), "frag"+s.name.toString());
 
         }
         fragTransaction.commit();
