@@ -3,6 +3,7 @@ package com.itsthenikolai.servicemonitor.ui.device;
 import static android.view.View.*;
 
 import android.os.Bundle;
+import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,15 +12,24 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.itsthenikolai.servicemonitor.MainActivity;
 import com.itsthenikolai.servicemonitor.R;
+import com.itsthenikolai.servicemonitor.Service;
+import com.itsthenikolai.servicemonitor.ServiceDao;
 import com.itsthenikolai.servicemonitor.databinding.FragmentDeviceBinding;
+
+import java.util.List;
+import com.itsthenikolai.servicemonitor.ui.ServiceTab;
 
 public class DeviceFragment extends Fragment {
 
     private FragmentDeviceBinding binding;
+    ServiceDao serviceDao;
+    public List<Service> relatedServices;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -46,6 +56,16 @@ public class DeviceFragment extends Fragment {
         return root;
     }
 
+    private void createServiceTabs()
+    {
+
+        for(Service s : relatedServices)
+        {
+            // add service tab
+            binding.serviceTabsLayout.addView(new ServiceTab(getContext()));
+        }
+    }
+
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState)
     {
@@ -53,7 +73,11 @@ public class DeviceFragment extends Fragment {
         MainActivity act = (MainActivity) getActivity();
         act.setShowButton(true);
 
+        serviceDao = act.db.serviceDao();
 
+        relatedServices = serviceDao.getAllForDevice(getArguments().getInt("device_id"));
+
+        createServiceTabs();
     }
 
 

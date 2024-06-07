@@ -15,7 +15,9 @@ import androidx.lifecycle.ViewModelProvider;
 import com.itsthenikolai.servicemonitor.Device;
 import com.itsthenikolai.servicemonitor.DeviceDao;
 import com.itsthenikolai.servicemonitor.MainActivity;
+import com.itsthenikolai.servicemonitor.ServiceDao;
 import com.itsthenikolai.servicemonitor.databinding.FragmentAddDeviceBinding;
+import com.itsthenikolai.servicemonitor.Service;
 
 import java.util.List;
 
@@ -23,7 +25,6 @@ public class AddDeviceFragment extends Fragment{
 
     private FragmentAddDeviceBinding binding;
     DeviceDao deviceDao;
-
 
     private void onSubmit()
     {
@@ -71,7 +72,6 @@ public class AddDeviceFragment extends Fragment{
 
         MainActivity act = (MainActivity) getActivity();
         deviceDao = act.db.deviceDao();
-
         startListeningForSubmit();
         return root;
     }
