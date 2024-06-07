@@ -17,6 +17,7 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.itsthenikolai.servicemonitor.MainActivity;
 import com.itsthenikolai.servicemonitor.R;
+import com.itsthenikolai.servicemonitor.Service;
 import com.itsthenikolai.servicemonitor.databinding.FragmentDeviceBinding;
 import com.itsthenikolai.servicemonitor.databinding.ServiceTabBinding;
 import com.itsthenikolai.servicemonitor.ui.device.DeviceViewModel;
@@ -24,9 +25,12 @@ import com.itsthenikolai.servicemonitor.ui.device.DeviceViewModel;
 public class ServiceTab extends Fragment {
 
     ServiceTabBinding binding;
+    private Service attachedService;
 
-    public ServiceTab()
-    {}
+    public ServiceTab(Service serviceToAttach)
+    {
+        attachedService = serviceToAttach;
+    }
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -38,5 +42,11 @@ public class ServiceTab extends Fragment {
         MainActivity act = (MainActivity) getActivity();
 
         return root;
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        binding.txtServiceName.setText(attachedService.name);
     }
 }

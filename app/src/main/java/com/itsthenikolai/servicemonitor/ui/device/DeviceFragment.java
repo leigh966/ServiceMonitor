@@ -64,7 +64,7 @@ public class DeviceFragment extends Fragment {
         for(Service s : relatedServices)
         {
             // add service tab
-            fragTransaction.add(binding.serviceTabsLayout.getId(), (Fragment) new ServiceTab(), "frag"+s.name.toString());
+            fragTransaction.add(binding.serviceTabsLayout.getId(), (Fragment) new ServiceTab(s), "frag"+s.name.toString());
 
         }
         fragTransaction.commit();
