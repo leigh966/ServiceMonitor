@@ -12,12 +12,10 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
-import com.itsthenikolai.servicemonitor.Device;
-import com.itsthenikolai.servicemonitor.DeviceDao;
+import com.itsthenikolai.servicemonitor.db.Device;
+import com.itsthenikolai.servicemonitor.db.DeviceDao;
 import com.itsthenikolai.servicemonitor.MainActivity;
-import com.itsthenikolai.servicemonitor.ServiceDao;
 import com.itsthenikolai.servicemonitor.databinding.FragmentAddDeviceBinding;
-import com.itsthenikolai.servicemonitor.Service;
 
 import java.util.List;
 

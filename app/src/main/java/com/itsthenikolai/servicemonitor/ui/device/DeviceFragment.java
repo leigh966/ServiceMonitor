@@ -1,9 +1,6 @@
 package com.itsthenikolai.servicemonitor.ui.device;
 
-import static android.view.View.*;
-
 import android.os.Bundle;
-import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,12 +13,12 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.ViewModelProvider;
 
-import com.itsthenikolai.servicemonitor.Device;
-import com.itsthenikolai.servicemonitor.DeviceDao;
+import com.itsthenikolai.servicemonitor.db.Device;
+import com.itsthenikolai.servicemonitor.db.DeviceDao;
 import com.itsthenikolai.servicemonitor.MainActivity;
 import com.itsthenikolai.servicemonitor.R;
-import com.itsthenikolai.servicemonitor.Service;
-import com.itsthenikolai.servicemonitor.ServiceDao;
+import com.itsthenikolai.servicemonitor.db.Service;
+import com.itsthenikolai.servicemonitor.db.ServiceDao;
 import com.itsthenikolai.servicemonitor.databinding.FragmentDeviceBinding;
 
 import java.util.List;

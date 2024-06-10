@@ -1,7 +1,6 @@
-package com.itsthenikolai.servicemonitor;
+package com.itsthenikolai.servicemonitor.db;
 
 import androidx.room.Database;
-import androidx.room.Room;
 import androidx.room.RoomDatabase;
 
 @Database(entities = {Device.class, Service.class}, version=1)

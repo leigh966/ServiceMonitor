@@ -1,11 +1,8 @@
-package com.itsthenikolai.servicemonitor;
+package com.itsthenikolai.servicemonitor.db;
 
-import androidx.annotation.NonNull;
-import androidx.core.location.LocationRequestCompat;
 import androidx.room.Dao;
 import androidx.room.Insert;
 import androidx.room.Query;
-import androidx.room.Transaction;
 
 import java.util.List;
 

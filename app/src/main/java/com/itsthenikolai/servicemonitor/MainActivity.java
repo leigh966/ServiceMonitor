@@ -9,7 +9,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.Menu;
 
-import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.navigation.NavigationView;
 
 import androidx.annotation.NonNull;
@@ -22,6 +21,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.room.Room;
 
 import com.itsthenikolai.servicemonitor.databinding.ActivityMainBinding;
+import com.itsthenikolai.servicemonitor.db.AppDatabase;
+import com.itsthenikolai.servicemonitor.db.Device;
 
 import java.util.List;
 

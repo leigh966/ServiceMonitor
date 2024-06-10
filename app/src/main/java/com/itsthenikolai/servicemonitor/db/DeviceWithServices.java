@@ -1,4 +1,4 @@
-package com.itsthenikolai.servicemonitor;
+package com.itsthenikolai.servicemonitor.db;
 
 import androidx.annotation.NonNull;
 import androidx.room.Embedded;

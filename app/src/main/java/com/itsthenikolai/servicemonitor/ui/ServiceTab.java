@@ -2,31 +2,23 @@ package com.itsthenikolai.servicemonitor.ui;
 
 import static android.os.Looper.getMainLooper;
 
-import android.content.Context;
-import android.graphics.Canvas;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
-import android.util.AttributeSet;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
-import androidx.activity.ComponentActivity;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.ViewModelProvider;
 
-import com.itsthenikolai.servicemonitor.Device;
+import com.itsthenikolai.servicemonitor.db.Device;
 import com.itsthenikolai.servicemonitor.MainActivity;
-import com.itsthenikolai.servicemonitor.R;
-import com.itsthenikolai.servicemonitor.Service;
-import com.itsthenikolai.servicemonitor.databinding.FragmentDeviceBinding;
+import com.itsthenikolai.servicemonitor.db.Service;
+import com.itsthenikolai.servicemonitor.ServiceState;
 import com.itsthenikolai.servicemonitor.databinding.ServiceTabBinding;
-import com.itsthenikolai.servicemonitor.ui.device.DeviceViewModel;
 
 import java.io.IOException;
 
@@ -37,31 +29,27 @@ public class ServiceTab extends Fragment {
     private Service attachedService;
     private Device attachedDevice;
 
-    private enum serviceState
-    {
-        UNRUN, FAILED, RUN, RUNNING
-    }
 
-    private serviceState currentState = serviceState.UNRUN;
+    private ServiceState currentState = ServiceState.UNRUN;
 
-    private void updateState(serviceState newState)
+    private void updateState(ServiceState newState)
     {
-        if(newState == serviceState.UNRUN)
+        if(newState == ServiceState.UNRUN)
         {
             binding.txtStatus.setText("?");
             binding.txtStatus.setTextColor(Color.YELLOW);
         }
-        else if(newState == serviceState.FAILED)
+        else if(newState == ServiceState.FAILED)
         {
             binding.txtStatus.setText("!");
             binding.txtStatus.setTextColor(Color.RED);
         }
-        else if(newState == serviceState.RUNNING)
+        else if(newState == ServiceState.RUNNING)
         {
             binding.txtStatus.setText("...");
             binding.txtStatus.setTextColor(Color.BLUE);
         }
-        else if(newState == serviceState.RUN)
+        else if(newState == ServiceState.RUN)
         {
             binding.txtStatus.setText("GOOD");
             binding.txtStatus.setTextColor(Color.GREEN);
@@ -74,11 +62,11 @@ public class ServiceTab extends Fragment {
     {
         if(code >= 200 && code < 300)
         {
-            updateState(serviceState.RUN);
+            updateState(ServiceState.RUN);
         }
         else
         {
-            updateState(serviceState.FAILED);
+            updateState(ServiceState.FAILED);
         }
         binding.txtStatus.setText(Integer.toString(code));
     }
@@ -92,7 +80,7 @@ public class ServiceTab extends Fragment {
     public void run()
     {
         Handler mainHandler = new Handler(getMainLooper());
-        updateState(serviceState.RUNNING);
+        updateState(ServiceState.RUNNING);
         OkHttpClient client = new OkHttpClient();
         String endpoint = attachedService.endpoint.startsWith("/") ? attachedService.endpoint : "/"+attachedService.endpoint;
         String url = attachedDevice.ip+":"+attachedService.port+endpoint;
@@ -106,7 +94,7 @@ public class ServiceTab extends Fragment {
                 Runnable r = new Runnable() {
                     @Override
                     public void run() {
-                        updateState(serviceState.FAILED);
+                        updateState(ServiceState.FAILED);
                     }
                 };
                 //mainHandler.post(r);
@@ -148,7 +136,7 @@ public class ServiceTab extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        updateState(serviceState.UNRUN);
+        updateState(ServiceState.UNRUN);
 
         binding.txtServiceName.setText(attachedService.name);
         binding.btnPlay.setOnClickListener(new View.OnClickListener() {
