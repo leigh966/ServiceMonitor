@@ -1,5 +1,9 @@
 package com.itsthenikolai.servicemonitor;
 
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
+import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
@@ -30,6 +34,22 @@ public class MainActivity extends AppCompatActivity {
 
     Menu sidebar;
     public NavController navController;
+
+    private void createNotificationChannel() {
+        // Create the NotificationChannel, but only on API 26+ because
+        // the NotificationChannel class is not in the Support Library.
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            CharSequence name = "services";
+            String description = "Notifies the state of all services";
+            int importance = NotificationManager.IMPORTANCE_DEFAULT;
+            NotificationChannel channel = new NotificationChannel("services", name, importance);
+            channel.setDescription(description);
+            // Register the channel with the system; you can't change the importance
+            // or other notification behaviors after this.
+            NotificationManager notificationManager = getSystemService(NotificationManager.class);
+            notificationManager.createNotificationChannel(channel);
+        }
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,6 +85,8 @@ public class MainActivity extends AppCompatActivity {
         setShowButton(false);
 
         initNavBar();
+        createNotificationChannel();
+        startService(new Intent(getBaseContext(), RunServicesService.class));
     }
 
     public void navigateToDevice(String name, int id){
