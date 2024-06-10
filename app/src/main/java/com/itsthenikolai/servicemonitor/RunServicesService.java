@@ -18,10 +18,8 @@ public class RunServicesService extends Service {
         return null;
     }
 
-    @Override
-    public int onStartCommand(Intent intent, int flags, int startId) {
-        Toast.makeText(this, "Service Started", Toast.LENGTH_LONG).show();
-
+    private void createNotification()
+    {
 
         NotificationCompat.Builder builder = new NotificationCompat.Builder(this, "services")
                 .setSmallIcon(R.drawable.ic_launcher_foreground)
@@ -38,9 +36,17 @@ public class RunServicesService extends Service {
             //                                          int[] grantResults)
             // to handle the case where the user grants the permission. See the documentation
             // for ActivityCompat#requestPermissions for more details.
-            return super.onStartCommand(intent, flags, startId);
+            return;
         }
         notManager.notify(0, builder.build());
+    }
+
+
+    @Override
+    public int onStartCommand(Intent intent, int flags, int startId) {
+        Toast.makeText(this, "Service Started", Toast.LENGTH_LONG).show();
+
+        createNotification();
 
         return super.onStartCommand(intent, flags, startId);
     }
