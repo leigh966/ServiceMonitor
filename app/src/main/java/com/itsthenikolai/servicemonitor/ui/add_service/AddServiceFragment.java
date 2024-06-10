@@ -69,10 +69,22 @@ public class AddServiceFragment extends Fragment {
     }
 
 
+    private int getNumber(EditText et)
+    {
+        return Integer.parseInt(et.getText().toString());
+    }
+
+    Boolean isGoodPortNumber(int portNumber)
+    {
+        return portNumber >= 0 && portNumber <= 65535;
+    }
+
     private void validate()
     {
-        Boolean somethingEmpty = isEmpty(binding.txtName) || isEmpty(binding.txtEndpoint) || isEmpty(binding.txtPort);
-        binding.btnSave.setEnabled(!somethingEmpty);
+        Boolean somethingEmpty = isEmpty(binding.txtName) || isEmpty(binding.txtEndpoint);
+
+        Boolean portNumberValid = !isEmpty(binding.txtPort) && isGoodPortNumber(getNumber(binding.txtPort));
+        binding.btnSave.setEnabled(!somethingEmpty && portNumberValid);
     }
 
     @Override
