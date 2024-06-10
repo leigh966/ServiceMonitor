@@ -1,13 +1,17 @@
 package com.itsthenikolai.servicemonitor.ui.add_service;
 
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
@@ -59,6 +63,43 @@ public class AddServiceFragment extends Fragment {
         Log.w("test", act.db.serviceDao().getAll().toString());
     }
 
+    private Boolean isEmpty(EditText et)
+    {
+        return et.getText().toString().isEmpty();
+    }
+
+
+    private void validate()
+    {
+        Boolean somethingEmpty = isEmpty(binding.txtName) || isEmpty(binding.txtEndpoint) || isEmpty(binding.txtPort);
+        binding.btnSave.setEnabled(!somethingEmpty);
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        binding.btnSave.setEnabled(false);
+        TextWatcher watcher = new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                validate();
+            }
+        };
+
+        binding.txtEndpoint.addTextChangedListener(watcher);
+        binding.txtName.addTextChangedListener(watcher);
+        binding.txtPort.addTextChangedListener(watcher);
+    }
 
     @Override
     public void onDestroyView() {
