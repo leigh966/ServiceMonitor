@@ -94,7 +94,8 @@ public class ServiceTab extends Fragment {
         Handler mainHandler = new Handler(getMainLooper());
         updateState(serviceState.RUNNING);
         OkHttpClient client = new OkHttpClient();
-        String url = attachedDevice.ip+":"+attachedService.port+attachedService.endpoint;
+        String endpoint = attachedService.endpoint.startsWith("/") ? attachedService.endpoint : "/"+attachedService.endpoint;
+        String url = attachedDevice.ip+":"+attachedService.port+endpoint;
         if(!(url.startsWith("http://")||url.startsWith("https://"))) url = "http://" + url;
         Request request = new Request.Builder().url(url).build();
         client.newCall(request).enqueue(new Callback() {
