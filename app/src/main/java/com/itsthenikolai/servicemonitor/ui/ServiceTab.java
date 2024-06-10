@@ -1,8 +1,12 @@
 package com.itsthenikolai.servicemonitor.ui;
 
+import static android.os.Looper.getMainLooper;
+
 import android.content.Context;
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -33,6 +37,52 @@ public class ServiceTab extends Fragment {
     private Service attachedService;
     private Device attachedDevice;
 
+    private enum serviceState
+    {
+        UNRUN, FAILED, RUN, RUNNING
+    }
+
+    private serviceState currentState = serviceState.UNRUN;
+
+    private void updateState(serviceState newState)
+    {
+        if(newState == serviceState.UNRUN)
+        {
+            binding.txtStatus.setText("?");
+            binding.txtStatus.setTextColor(Color.YELLOW);
+        }
+        else if(newState == serviceState.FAILED)
+        {
+            binding.txtStatus.setText("!");
+            binding.txtStatus.setTextColor(Color.RED);
+        }
+        else if(newState == serviceState.RUNNING)
+        {
+            binding.txtStatus.setText("...");
+            binding.txtStatus.setTextColor(Color.BLUE);
+        }
+        else if(newState == serviceState.RUN)
+        {
+            binding.txtStatus.setText("GOOD");
+            binding.txtStatus.setTextColor(Color.GREEN);
+        }
+
+        currentState = newState;
+    }
+
+    private void updateState(int code)
+    {
+        if(code >= 200 && code < 300)
+        {
+            updateState(serviceState.RUN);
+        }
+        else
+        {
+            updateState(serviceState.FAILED);
+        }
+        binding.txtStatus.setText(Integer.toString(code));
+    }
+
     public ServiceTab(Device deviceToAttach, Service serviceToAttach)
     {
         attachedService = serviceToAttach;
@@ -41,6 +91,8 @@ public class ServiceTab extends Fragment {
 
     public void run()
     {
+        Handler mainHandler = new Handler(getMainLooper());
+        updateState(serviceState.RUNNING);
         OkHttpClient client = new OkHttpClient();
         String url = attachedDevice.ip+":"+attachedService.port+attachedService.endpoint;
         if(!(url.startsWith("http://")||url.startsWith("https://"))) url = "http://" + url;
@@ -49,11 +101,31 @@ public class ServiceTab extends Fragment {
             @Override
             public void onFailure(@NonNull Call call, @NonNull IOException e) {
                 Log.w("Request","Request failed");
+
+                Runnable r = new Runnable() {
+                    @Override
+                    public void run() {
+                        updateState(serviceState.FAILED);
+                    }
+                };
+                //mainHandler.post(r);
+                getActivity().runOnUiThread(r);
+
             }
 
             @Override
             public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
                 Log.i("Request","Request succeeded - "+response.code());
+                Runnable r = new Runnable() {
+                    @Override
+                    public void run() {
+                        updateState(response.code());
+                    }
+                };
+                //mainHandler.post(r);
+                getActivity().runOnUiThread(r);
+
+
             }
         });
     }
@@ -74,6 +146,9 @@ public class ServiceTab extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+        updateState(serviceState.UNRUN);
+
         binding.txtServiceName.setText(attachedService.name);
         binding.btnPlay.setOnClickListener(new View.OnClickListener() {
             @Override
