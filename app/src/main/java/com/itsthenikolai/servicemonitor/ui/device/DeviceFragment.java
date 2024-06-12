@@ -13,12 +13,12 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.ViewModelProvider;
 
-import com.itsthenikolai.servicemonitor.db.Device;
-import com.itsthenikolai.servicemonitor.db.DeviceDao;
+import com.itsthenikolai.servicemonitor.db.Device.Device;
+import com.itsthenikolai.servicemonitor.db.Device.DeviceDao;
 import com.itsthenikolai.servicemonitor.MainActivity;
 import com.itsthenikolai.servicemonitor.R;
-import com.itsthenikolai.servicemonitor.db.Service;
-import com.itsthenikolai.servicemonitor.db.ServiceDao;
+import com.itsthenikolai.servicemonitor.db.Service.Service;
+import com.itsthenikolai.servicemonitor.db.Service.ServiceDao;
 import com.itsthenikolai.servicemonitor.databinding.FragmentDeviceBinding;
 
 import java.util.List;

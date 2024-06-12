@@ -22,7 +22,7 @@ import androidx.room.Room;
 
 import com.itsthenikolai.servicemonitor.databinding.ActivityMainBinding;
 import com.itsthenikolai.servicemonitor.db.AppDatabase;
-import com.itsthenikolai.servicemonitor.db.Device;
+import com.itsthenikolai.servicemonitor.db.Device.Device;
 
 import java.util.List;
 

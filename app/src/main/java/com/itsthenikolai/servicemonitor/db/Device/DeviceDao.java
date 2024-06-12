@@ -1,4 +1,4 @@
-package com.itsthenikolai.servicemonitor.db;
+package com.itsthenikolai.servicemonitor.db.Device;
 
 import androidx.room.Dao;
 import androidx.room.Insert;

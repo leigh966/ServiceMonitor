@@ -15,8 +15,8 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.itsthenikolai.servicemonitor.MainActivity;
-import com.itsthenikolai.servicemonitor.db.Service;
-import com.itsthenikolai.servicemonitor.db.ServiceDao;
+import com.itsthenikolai.servicemonitor.db.Service.Service;
+import com.itsthenikolai.servicemonitor.db.Service.ServiceDao;
 import com.itsthenikolai.servicemonitor.databinding.FragmentAddServiceBinding;
 
 public class AddServiceFragment extends Fragment {

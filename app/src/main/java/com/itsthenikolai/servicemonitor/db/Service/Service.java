@@ -1,4 +1,4 @@
-package com.itsthenikolai.servicemonitor.db;
+package com.itsthenikolai.servicemonitor.db.Service;
 
 import androidx.annotation.NonNull;
 import androidx.room.ColumnInfo;

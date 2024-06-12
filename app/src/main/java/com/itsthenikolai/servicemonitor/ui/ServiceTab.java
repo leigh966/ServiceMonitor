@@ -1,11 +1,8 @@
 package com.itsthenikolai.servicemonitor.ui;
 
-import static android.os.Looper.getMainLooper;
-
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.Handler;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,13 +13,13 @@ import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
 
-import com.itsthenikolai.servicemonitor.db.Device;
+import com.itsthenikolai.servicemonitor.db.Device.Device;
 import com.itsthenikolai.servicemonitor.MainActivity;
-import com.itsthenikolai.servicemonitor.db.Service;
+import com.itsthenikolai.servicemonitor.db.Service.Service;
 import com.itsthenikolai.servicemonitor.ServiceState;
 import com.itsthenikolai.servicemonitor.databinding.ServiceTabBinding;
-import com.itsthenikolai.servicemonitor.db.StatusLog;
-import com.itsthenikolai.servicemonitor.db.StatusLogDao;
+import com.itsthenikolai.servicemonitor.db.Logs.StatusLog;
+import com.itsthenikolai.servicemonitor.db.Logs.StatusLogDao;
 
 import java.io.IOException;
 import java.util.List;

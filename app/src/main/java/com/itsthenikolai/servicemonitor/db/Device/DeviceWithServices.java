@@ -1,8 +1,10 @@
-package com.itsthenikolai.servicemonitor.db;
+package com.itsthenikolai.servicemonitor.db.Device;
 
 import androidx.annotation.NonNull;
 import androidx.room.Embedded;
 import androidx.room.Relation;
+
+import com.itsthenikolai.servicemonitor.db.Service.Service;
 
 import java.util.List;
 

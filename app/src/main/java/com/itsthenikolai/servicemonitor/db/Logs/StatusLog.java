@@ -1,4 +1,4 @@
-package com.itsthenikolai.servicemonitor.db;
+package com.itsthenikolai.servicemonitor.db.Logs;
 
 import android.os.Build;
 
