@@ -14,6 +14,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
+import com.itsthenikolai.servicemonitor.DatabaseAccessor;
 import com.itsthenikolai.servicemonitor.MainActivity;
 import com.itsthenikolai.servicemonitor.db.Service.Service;
 import com.itsthenikolai.servicemonitor.db.Service.ServiceDao;
@@ -54,11 +55,10 @@ public class AddServiceFragment extends Fragment {
                 endpoint,
                 port,
                 getArguments().getInt("device_id"));
-        MainActivity act = (MainActivity) getActivity();
-        ServiceDao dao = act.db.serviceDao();
+        ServiceDao dao = DatabaseAccessor.db.serviceDao();
         dao.insertAll(newService);
-        Log.w("test", act.db.deviceDao().getDeviceWithServices().toString());
-        Log.w("test", act.db.serviceDao().getAll().toString());
+        Log.w("test", DatabaseAccessor.db.deviceDao().getDeviceWithServices().toString());
+        Log.w("test", dao.getAll().toString());
     }
 
     private Boolean isEmpty(EditText et)

@@ -13,6 +13,7 @@ import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
 
+import com.itsthenikolai.servicemonitor.DatabaseAccessor;
 import com.itsthenikolai.servicemonitor.db.Device.Device;
 import com.itsthenikolai.servicemonitor.MainActivity;
 import com.itsthenikolai.servicemonitor.db.Service.Service;
@@ -168,7 +169,7 @@ public class ServiceTab extends Fragment {
 
         // get the status log dao
         MainActivity act = (MainActivity) getActivity();
-        sld = act.db.statusLogDao();
+        sld = DatabaseAccessor.db.statusLogDao();
 
 
         loadState();

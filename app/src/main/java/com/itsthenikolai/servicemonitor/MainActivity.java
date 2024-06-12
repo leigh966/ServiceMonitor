@@ -31,8 +31,6 @@ public class MainActivity extends AppCompatActivity {
     private AppBarConfiguration mAppBarConfiguration;
     private ActivityMainBinding binding;
 
-    public AppDatabase db;
-
     Menu sidebar;
     public NavController navController;
 
@@ -57,13 +55,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
 
-
-
-        db = Room.databaseBuilder(getApplicationContext(),
-                AppDatabase.class, "service-db")
-                    .allowMainThreadQueries()
-                .fallbackToDestructiveMigration()
-                    .build();
+        DatabaseAccessor.init(getApplicationContext());
 
 
         binding = ActivityMainBinding.inflate(getLayoutInflater());
@@ -119,7 +111,7 @@ public class MainActivity extends AppCompatActivity {
     public void initNavBar()
     {
         // Get the devices
-        List<Device> devices = db.deviceDao().getAll();
+        List<Device> devices = DatabaseAccessor.db.deviceDao().getAll();
         // Add the devices
         for (Device d : devices
              ) {

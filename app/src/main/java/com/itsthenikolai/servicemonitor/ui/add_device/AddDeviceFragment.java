@@ -12,6 +12,7 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
+import com.itsthenikolai.servicemonitor.DatabaseAccessor;
 import com.itsthenikolai.servicemonitor.db.Device.Device;
 import com.itsthenikolai.servicemonitor.db.Device.DeviceDao;
 import com.itsthenikolai.servicemonitor.MainActivity;
@@ -69,7 +70,7 @@ public class AddDeviceFragment extends Fragment{
         addDeviceViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
 
         MainActivity act = (MainActivity) getActivity();
-        deviceDao = act.db.deviceDao();
+        deviceDao = DatabaseAccessor.db.deviceDao();
         startListeningForSubmit();
         return root;
     }

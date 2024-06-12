@@ -13,6 +13,7 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.ViewModelProvider;
 
+import com.itsthenikolai.servicemonitor.DatabaseAccessor;
 import com.itsthenikolai.servicemonitor.db.Device.Device;
 import com.itsthenikolai.servicemonitor.db.Device.DeviceDao;
 import com.itsthenikolai.servicemonitor.MainActivity;
@@ -59,8 +60,7 @@ public class DeviceFragment extends Fragment {
     {
         FragmentManager fragMan = getFragmentManager();
         FragmentTransaction fragTransaction = fragMan.beginTransaction();
-        MainActivity act = (MainActivity) getActivity();
-        DeviceDao deviceDao = act.db.deviceDao();
+        DeviceDao deviceDao = DatabaseAccessor.db.deviceDao();
         Device thisDevice = deviceDao.get(getArguments().getInt("device_id"));
         for(Service s : relatedServices)
         {
@@ -78,7 +78,7 @@ public class DeviceFragment extends Fragment {
         MainActivity act = (MainActivity) getActivity();
         act.setShowButton(true);
 
-        serviceDao = act.db.serviceDao();
+        serviceDao = DatabaseAccessor.db.serviceDao();
 
         relatedServices = serviceDao.getAllForDevice(getArguments().getInt("device_id"));
 
