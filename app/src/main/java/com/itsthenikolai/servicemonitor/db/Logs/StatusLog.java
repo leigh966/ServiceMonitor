@@ -39,6 +39,19 @@ public class StatusLog {
         dateTime = System.currentTimeMillis();
     }
 
+    public String getDescriptor()
+    {
+        if(code != null)
+        {
+            return code;
+        }
+        if(status == ServiceState.FAILED)
+        {
+            return "!";
+        }
+        return "?";
+    }
+
 
     @PrimaryKey(autoGenerate = true)
     public int uid;

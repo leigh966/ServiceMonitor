@@ -3,13 +3,19 @@ package com.itsthenikolai.servicemonitor;
 import android.app.Service;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.os.Build;
 import android.os.IBinder;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
 import androidx.core.app.ActivityCompat;
 import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
+
+import com.itsthenikolai.servicemonitor.db.Logs.StatusLog;
+
+import java.util.List;
 
 public class RunServicesService extends Service {
     @Nullable
@@ -18,13 +24,41 @@ public class RunServicesService extends Service {
         return null;
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    private String buildContent()
+    {
+        String output = "";
+        // get all the services
+        List<com.itsthenikolai.servicemonitor.db.Service.Service> services = DatabaseAccessor.db.serviceDao().getAll();
+
+        // for each service
+        for(com.itsthenikolai.servicemonitor.db.Service.Service s : services)
+        {
+            // get latest log for service
+            List<StatusLog> logs = DatabaseAccessor.db.statusLogDao().getByServiceId(s.uid);
+            StatusLog log;
+            if(logs.isEmpty()) {
+            log=new StatusLog(ServiceState.UNRUN, s.uid);
+            }else {
+                log = logs.get(0);
+            }
+
+            // output += `${service_name} - ${status_descriptor}\n`
+            output += s.name + " - " + log.getDescriptor() + "\n";
+        }
+
+        return output;
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.O)
     private void createNotification()
     {
-
+        String body = buildContent();
         NotificationCompat.Builder builder = new NotificationCompat.Builder(this, "services")
                 .setSmallIcon(R.drawable.ic_launcher_foreground)
                 .setContentTitle("Service Monitor")
-                .setContentText("<services here>")
+                .setStyle(new NotificationCompat.BigTextStyle().bigText(body))
+                .setContentText(body)
                 .setPriority(NotificationCompat.PRIORITY_DEFAULT);
 
         NotificationManagerCompat notManager = NotificationManagerCompat.from(this);
