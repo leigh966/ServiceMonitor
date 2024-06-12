@@ -3,6 +3,7 @@ package com.itsthenikolai.servicemonitor.ui;
 import static android.os.Looper.getMainLooper;
 
 import android.graphics.Color;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
@@ -12,6 +13,7 @@ import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
 
 import com.itsthenikolai.servicemonitor.db.Device;
@@ -19,8 +21,11 @@ import com.itsthenikolai.servicemonitor.MainActivity;
 import com.itsthenikolai.servicemonitor.db.Service;
 import com.itsthenikolai.servicemonitor.ServiceState;
 import com.itsthenikolai.servicemonitor.databinding.ServiceTabBinding;
+import com.itsthenikolai.servicemonitor.db.StatusLog;
+import com.itsthenikolai.servicemonitor.db.StatusLogDao;
 
 import java.io.IOException;
+import java.util.List;
 
 import okhttp3.*;
 public class ServiceTab extends Fragment {
@@ -29,6 +34,7 @@ public class ServiceTab extends Fragment {
     private Service attachedService;
     private Device attachedDevice;
 
+    StatusLogDao sld;
 
     private ServiceState currentState = ServiceState.UNRUN;
 
@@ -79,14 +85,17 @@ public class ServiceTab extends Fragment {
 
     public void run()
     {
-        Handler mainHandler = new Handler(getMainLooper());
         updateState(ServiceState.RUNNING);
         OkHttpClient client = new OkHttpClient();
         String endpoint = attachedService.endpoint.startsWith("/") ? attachedService.endpoint : "/"+attachedService.endpoint;
         String url = attachedDevice.ip+":"+attachedService.port+endpoint;
         if(!(url.startsWith("http://")||url.startsWith("https://"))) url = "http://" + url;
         Request request = new Request.Builder().url(url).build();
+
+
+
         client.newCall(request).enqueue(new Callback() {
+            @RequiresApi(api = Build.VERSION_CODES.O)
             @Override
             public void onFailure(@NonNull Call call, @NonNull IOException e) {
                 Log.w("Request","Request failed");
@@ -99,9 +108,11 @@ public class ServiceTab extends Fragment {
                 };
                 //mainHandler.post(r);
                 getActivity().runOnUiThread(r);
+                sld.insertAll(new StatusLog(ServiceState.FAILED, attachedService.uid));
 
             }
 
+            @RequiresApi(api = Build.VERSION_CODES.O)
             @Override
             public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
                 Log.i("Request","Request succeeded - "+response.code());
@@ -113,6 +124,7 @@ public class ServiceTab extends Fragment {
                 };
                 //mainHandler.post(r);
                 getActivity().runOnUiThread(r);
+                sld.insertAll(new StatusLog(response.code(), attachedService.uid));
 
 
             }
@@ -126,17 +138,44 @@ public class ServiceTab extends Fragment {
         binding = ServiceTabBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
-
-        MainActivity act = (MainActivity) getActivity();
-
         return root;
     }
+
+
+    private void loadState()
+    {
+        // fetch the logs
+        List<StatusLog> logs = sld.getByServiceId(attachedService.uid);
+
+        // if there are no logs, mark the tab as unrun
+        if(logs.isEmpty()) {
+            updateState(ServiceState.UNRUN);
+        }
+        // otherwise, use the state of the top log
+        else
+        {
+
+            if(logs.get(0).code == null) {
+                updateState(logs.get(0).status);
+            }else {
+                updateState(Integer.parseInt(logs.get(0).code));
+            }
+        }
+    }
+
+
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        updateState(ServiceState.UNRUN);
+        // get the status log dao
+        MainActivity act = (MainActivity) getActivity();
+        sld = act.db.statusLogDao();
+
+
+        loadState();
+
 
         binding.txtServiceName.setText(attachedService.name);
         binding.btnPlay.setOnClickListener(new View.OnClickListener() {
@@ -145,5 +184,8 @@ public class ServiceTab extends Fragment {
                 run();
             }
         });
+
+
+
     }
 }
