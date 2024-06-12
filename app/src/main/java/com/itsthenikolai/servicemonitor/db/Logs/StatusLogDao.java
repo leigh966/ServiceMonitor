@@ -12,9 +12,9 @@ public interface StatusLogDao {
     @Insert
     public void insertAll(StatusLog... logs);
 
-    @Query("SELECT * FROM statuslog")
+    @Query("SELECT * FROM statuslog ORDER BY datetime DESC")
     public List<StatusLog> getAll();
 
-    @Query("SELECT * FROM statuslog WHERE service_id=:serviceId")
+    @Query("SELECT * FROM statuslog WHERE service_id=:serviceId ORDER BY datetime DESC")
     public List<StatusLog> getByServiceId(int serviceId);
 }

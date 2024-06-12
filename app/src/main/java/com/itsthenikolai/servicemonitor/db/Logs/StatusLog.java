@@ -1,5 +1,6 @@
 package com.itsthenikolai.servicemonitor.db.Logs;
 
+import android.app.appsearch.ReportSystemUsageRequest;
 import android.os.Build;
 
 import androidx.annotation.NonNull;
@@ -26,7 +27,7 @@ public class StatusLog {
         this.code = Integer.toString(code);
         status = code >= 200 && code < 300 ? ServiceState.RUN : ServiceState.FAILED;
         this.serviceId = serviceId;
-        dateTime = LocalDateTime.now();
+        dateTime = System.currentTimeMillis();
     }
 
     @RequiresApi(api = Build.VERSION_CODES.O)
@@ -35,7 +36,7 @@ public class StatusLog {
         code = null;
         this.status = status;
         this.serviceId = serviceId;
-        dateTime = LocalDateTime.now();
+        dateTime = System.currentTimeMillis();
     }
 
 
@@ -52,5 +53,5 @@ public class StatusLog {
     public int serviceId;
 
     @ColumnInfo(name="datetime")
-    public LocalDateTime dateTime;
+    public long dateTime;
 }
