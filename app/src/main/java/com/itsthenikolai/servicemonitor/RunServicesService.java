@@ -8,7 +8,7 @@ import android.os.IBinder;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
-import androidx.annotation.RequiresApi;
+
 import androidx.core.app.ActivityCompat;
 import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
@@ -24,7 +24,7 @@ public class RunServicesService extends Service {
         return null;
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.O)
+
     private String buildContent()
     {
         String output = "";
@@ -50,7 +50,7 @@ public class RunServicesService extends Service {
         return output;
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.O)
+
     private void createNotification()
     {
         String body = buildContent();
