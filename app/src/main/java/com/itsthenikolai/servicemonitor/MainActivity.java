@@ -19,10 +19,9 @@ import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.room.Room;
+
 
 import com.itsthenikolai.servicemonitor.databinding.ActivityMainBinding;
-import com.itsthenikolai.servicemonitor.db.AppDatabase;
 import com.itsthenikolai.servicemonitor.db.Device.Device;
 
 import java.util.List;
