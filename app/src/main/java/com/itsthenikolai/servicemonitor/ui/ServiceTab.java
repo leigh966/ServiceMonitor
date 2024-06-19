@@ -162,6 +162,12 @@ public class ServiceTab extends Fragment {
     }
 
 
+    void delete()
+    {
+        DatabaseAccessor.db.serviceDao().deleteById(attachedService.uid);
+        MainActivity act = (MainActivity) getActivity();
+        act.navigateToDevice(attachedDevice.name, attachedDevice.uid);
+    }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
@@ -183,6 +189,12 @@ public class ServiceTab extends Fragment {
             }
         });
 
+        binding.btnDelete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                delete();
+            }
+        });
 
 
     }

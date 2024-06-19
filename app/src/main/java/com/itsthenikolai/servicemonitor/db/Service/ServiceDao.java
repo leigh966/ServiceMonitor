@@ -17,4 +17,6 @@ public interface ServiceDao {
     @Query("SELECT * FROM service WHERE deviceId = :deviceId")
     List<Service> getAllForDevice(int deviceId);
 
+    @Query("DELETE FROM service WHERE uid=:uid")
+    void deleteById(int uid);
 }
