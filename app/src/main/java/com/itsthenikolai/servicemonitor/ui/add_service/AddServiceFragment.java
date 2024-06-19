@@ -55,10 +55,15 @@ public class AddServiceFragment extends Fragment {
                 endpoint,
                 port,
                 getArguments().getInt("device_id"));
+
+        MainActivity act = (MainActivity) getActivity();
+        String deviceName = DatabaseAccessor.db.deviceDao().get(newService.deviceId).name;
+        act.navigateToDevice(deviceName, newService.deviceId);
+
         ServiceDao dao = DatabaseAccessor.db.serviceDao();
         dao.insertAll(newService);
-        Log.w("test", DatabaseAccessor.db.deviceDao().getDeviceWithServices().toString());
-        Log.w("test", dao.getAll().toString());
+        //Log.w("test", DatabaseAccessor.db.deviceDao().getDeviceWithServices().toString());
+        //Log.w("test", dao.getAll().toString());
     }
 
     private Boolean isEmpty(EditText et)
