@@ -93,6 +93,13 @@ public class MainActivity extends AppCompatActivity {
         navController.navigate(R.id.nav_device, bundle);
     }
 
+    public void navigateToLatestDevice()
+    {
+        List<Device> devices = DatabaseAccessor.db.deviceDao().getAll();
+        Device lastDevice = devices.get(devices.size()-1);
+        navigateToDevice(lastDevice.name, lastDevice.uid);
+    }
+
     public void addNavOption(Device d)
     {
         sidebar.add(d.name);
@@ -109,6 +116,20 @@ public class MainActivity extends AppCompatActivity {
     public void onAddDeviceClicked()
     {
         navController.navigate(R.id.nav_add_device);
+    }
+
+    private void clearNavBar()
+    {
+        // this is scary but will do the job
+        while(sidebar.size()>1) {
+            sidebar.removeItem(0);
+        }
+    }
+
+    public void refreshNavBar()
+    {
+        clearNavBar();
+        initNavBar();
     }
 
     public void initNavBar()

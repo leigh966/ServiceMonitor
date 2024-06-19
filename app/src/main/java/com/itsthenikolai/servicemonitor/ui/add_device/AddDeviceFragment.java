@@ -33,18 +33,9 @@ public class AddDeviceFragment extends Fragment{
 
         // Update nav bar
         MainActivity act = (MainActivity) getActivity();
-        act.addNavOption(newDevice);
+        act.refreshNavBar();
 
-        // Navigate to the fragment of the new device
-        act.navigateToDevice(newDevice.name, newDevice.uid);
-
-        // Log current
-        List<Device> devices = deviceDao.getAll();
-        for (Device d:
-             devices) {
-            Log.w("devices", d.name.toString() + ": " + d.ip.toString());
-
-        }
+        act.navigateToLatestDevice();
     }
 
     private void startListeningForSubmit()
